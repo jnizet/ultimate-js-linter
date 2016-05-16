@@ -49,6 +49,24 @@
                 });
             };
         </script>
+
+        <script>
+            window.twttr = (function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0],
+                t = window.twttr || {};
+                if (d.getElementById(id)) return t;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "https://platform.twitter.com/widgets.js";
+                fjs.parentNode.insertBefore(js, fjs);
+             
+                t._e = [];
+                t.ready = function(f) {
+                    t._e.push(f);
+                };
+             
+                return t;
+            }(document, "script", "twitter-wjs"));</script>
     </head>
     <body>
         <div class="container">
@@ -91,7 +109,13 @@
 
                     </ul>
 
-                    <p class="text-right"><small>Made with ♥ by <a href="https://twitter.com/jbnizet">JB Nizet</a></small></p>
+                    <p class="text-right">
+                        <small>Made with ♥ by <a href="https://twitter.com/jbnizet">JB Nizet</a>
+                            <span style="vertical-align: sub;">
+                               <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=Try%20the%20ultimate%20%23javascript%20linter%20at%20https://jnizet.github.io//ultimate-js-linter/">Tweet</a>
+                           </span>
+                        </small>
+                    </p>
                 </div>
             </div>
         </div>

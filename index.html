@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>The ultimate JavaScript Linter</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <script>
+            window.onload = function() {
+                document.getElementById('lint').addEventListener('click', function(event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    var list = document.getElementById('result-list');
+                    list.innerHTML = '';
+
+                    var error = 'OK, you don\'t have much choice since JavaScript is the only language supported by browsers. But have you considered using an alternative that sucks less, like TypeScript?';
+                    if (document.getElementById('server').checked) {
+                        error = 'JavaScript code on the server? Really? Almost all existing languages suck less than JavaScript. Use something else. And please don\'t choose Perl.';
+                    }
+
+                    var helpBlock = document.getElementById('help-block');
+                    
+                    var code = document.getElementById('code').value;
+                    if (code.trim().length == 0) {
+                        helpBlock.style.display = '';
+                        return;
+                    }
+
+                    var definitiveResult = document.getElementById('definitive-result');
+                    var waiting = document.getElementById('waiting');
+
+                    waiting.style.display = 'block';
+                    helpBlock.style.display = 'none';
+                    definitiveResult.style.display = 'none';
+
+                    document.getElementById('result').style.display = 'block';
+
+                    setTimeout(function() {
+                        code.split(/\r?\n/).forEach(function(line, index) {
+                            if (line.trim().length > 0) {
+                                var li = document.createElement('li');
+                                li.innerHTML = 'Line ' + (index + 1) + ': ' + error;
+                                list.appendChild(li);
+                            }
+                        });
+                        definitiveResult.style.display = 'block';
+                        waiting.style.display = 'none';
+                    }, 3000);
+                    
+                });
+            };
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <h1>The ultimate JavaScript Linter</h1>
+            <p>Choose what kind of JavaScript you're writing, and post a code snippet to get the ultimate
+                JavaScript code analysis tips.</p>
+            <form>
+                <div class="form-group">
+                    <label>You're writing...</label>
+                    <div class="form-inline">
+                        <div class="radio">
+                            <label>
+                              <input type="radio" name="kind" value="client" id="client" checked> Client-side (in browser) JS
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                              <input type="radio" name="kind" value="server" id="server"> Server-side (Node) JS
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="code">Your JS code</label>
+                    <textarea class="form-control" cols="120" rows="10" id="code"></textarea>
+                    <span id="help-block" class="help-block" style="display: none;"><span class="text-danger">Please enter some code</span></span>
+                </div>
+                <button type="submit" class="btn btn-primary" id="lint">Lint!</button>
+            </form>
+
+            <div id="result" style="display: none;">
+                <h2>Thank you for using the ultimate JavaScript Linter.</h2>
+
+                <div id="waiting"><img src="loading.gif" style="width: 20px; height: 20px;" alt="Loading..."/> Calling left-pad.io...</div>
+
+                <div id="definitive-result" style="display: none;">
+                    <p>Here's the result.</p>
+
+                    <ul class="text-danger" id="result-list">
+
+                    </ul>
+
+                    <p class="text-right"><small>Made with ♥ by <a href="https://twitter.com/jbnizet">JB Nizet</a></small></p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
